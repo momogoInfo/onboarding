@@ -121,7 +121,7 @@ http://scripts.sil.org/OFL
   <sc-if value="{{ isMain }}" hint-placeholder-val="{{ true }}">
   <div data-screen-label="Main">
 
-    <div style="position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;height:480px;overflow:hidden">
+    <div style="position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;height:480px;overflow:hidden;background-image:url('{{ heroBgUrl }}');background-size:cover;background-position:center">
       <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,18,16,0.35) 0%, rgba(18,18,16,0.4) 50%, rgba(18,18,16,0.55) 100%); pointer-events: none"></div>
       <div style="position: absolute; inset: 0px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px;">
         <h1 style="font-size: 40px; line-height: 1.4; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 32px; color: #FFFFFF; position: static">EU Crossborder Enabler,<br>momogo</h1><div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
@@ -294,7 +294,7 @@ http://scripts.sil.org/OFL
     <div style="max-width: 1280px; margin: 0 auto; padding: 0 40px 64px; padding-bottom: 0px">
       <div style="background: #FFFFFF; border-radius: 12px; padding: 28px 32px; margin-bottom: 23px; padding-top: 20px; padding-bottom: 20px; display:flex; gap:24px; align-items:flex-start">
         <div style="flex:none;width:160px;height:120px;background:#FFFFFF">
-          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="company-logo" shape="rounded" radius="10" placeholder="회사 로고" src="images/2.about us/about us.png" fit="cover" style="background:#FFFFFF" hint-size="160px,120px"></x-import>
+          <img src="images/2.about us/about us.png" alt="company logo" style="width:160px;height:120px;object-fit:cover;border-radius:10px;background:#FFFFFF">
         </div>
         <div style="flex:1;min-width:0">
           <div style="font-size:16px;font-weight:800;margin-bottom:12px">ECA Food GmbH (Brand: momogo)</div>
@@ -431,7 +431,7 @@ http://scripts.sil.org/OFL
       <sc-for list="{{ serviceDetailCards }}" as="card" hint-placeholder-count="4">
         <div style="{{ card.cardStyle }}" onMouseEnter="{{ card.onEnter }}" onMouseLeave="{{ card.onLeave }}" onClick="{{ card.scrollToDetail }}">
           <div style="{{ card.imgWrapStyle }}">
-            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ card.imgId }}" shape="rect" src="{{ card.src }}" placeholder="배경 이미지를 드롭하세요" style="{{ card.imgStyle }}" hint-size="100%,100%"></x-import>
+            <img src="{{ card.src }}" alt="{{ card.eyebrow }}" style="object-fit:cover;{{ card.imgStyle }}">
           </div>
           <div style="position:absolute;inset:0;background:{{ card.scrim }};pointer-events:none;transition:background 0.25s ease"></div>
 
