@@ -5,6 +5,10 @@
 
 
 <meta name="ext-resource-dependency" content="images/1.main/eu_crossborder.png" data-resource-id="heroBg" />
+<meta name="ext-resource-dependency" content="images/3.business/timelab-sWOvgOOFk1g-unsplash.jpg" data-resource-id="svcCustoms" />
+<meta name="ext-resource-dependency" content="images/3.business/carlos-muza-hpjSkU2UYSU-unsplash.jpg" data-resource-id="svcMarketing" />
+<meta name="ext-resource-dependency" content="images/3.business/adrian-sulyok-sczNLg6rrhQ-unsplash.jpg" data-resource-id="svcFulfilment" />
+<meta name="ext-resource-dependency" content="images/3.business/romain-dancre-doplSDELX7E-unsplash.jpg" data-resource-id="svcRegulation" />
 <meta name="ext-resource-dependency" content="images/1.main/1.partners/1.amazon.png" data-resource-id="pAmazon" />
 <meta name="ext-resource-dependency" content="images/1.main/1.partners/2.tiktok.png" data-resource-id="pTiktok" />
 <meta name="ext-resource-dependency" content="images/1.main/1.partners/3.kotra.png" data-resource-id="pKotra" />
@@ -427,7 +431,7 @@ http://scripts.sil.org/OFL
       <sc-for list="{{ serviceDetailCards }}" as="card" hint-placeholder-count="4">
         <div style="{{ card.cardStyle }}" onMouseEnter="{{ card.onEnter }}" onMouseLeave="{{ card.onLeave }}" onClick="{{ card.scrollToDetail }}">
           <div style="{{ card.imgWrapStyle }}">
-            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ card.imgId }}" shape="rect" placeholder="배경 이미지를 드롭하세요" style="{{ card.imgStyle }}" hint-size="100%,100%"></x-import>
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ card.imgId }}" shape="rect" src="{{ card.src }}" placeholder="배경 이미지를 드롭하세요" style="{{ card.imgStyle }}" hint-size="100%,100%"></x-import>
           </div>
           <div style="position:absolute;inset:0;background:{{ card.scrim }};pointer-events:none;transition:background 0.25s ease"></div>
 
@@ -1398,6 +1402,12 @@ class Component extends DCLogic {
       label: svgWrap('<path d="M3 8l6-4 12 3-2 12-12-3z" transform="scale(0.9) translate(1,1)"/><circle cx="8.5" cy="8.5" r="1.2"/>'),
     };
     const serviceDetailRefs = this._serviceDetailRefs || (this._serviceDetailRefs = {});
+    const serviceImgMap = {
+      customs: (window.__resources && window.__resources.svcCustoms) || 'images/3.business/timelab-sWOvgOOFk1g-unsplash.jpg',
+      marketing: (window.__resources && window.__resources.svcMarketing) || 'images/3.business/carlos-muza-hpjSkU2UYSU-unsplash.jpg',
+      fulfilment: (window.__resources && window.__resources.svcFulfilment) || 'images/3.business/adrian-sulyok-sczNLg6rrhQ-unsplash.jpg',
+      regulation: (window.__resources && window.__resources.svcRegulation) || 'images/3.business/romain-dancre-doplSDELX7E-unsplash.jpg',
+    };
     const serviceDetailCards = serviceDetailDefs.map((d, i) => {
       const expanded = expandedService === d.key;
       if (!serviceDetailRefs[d.key]) serviceDetailRefs[d.key] = React.createRef();
@@ -1420,6 +1430,7 @@ class Component extends DCLogic {
         isSimple: d.kind === 'simple', isMarketing: d.kind === 'marketing',
         expanded,
         imgId: 'service-bg-' + d.key,
+        src: serviceImgMap[d.key],
         cardStyle: cardStyleBase(),
         scrim: scrimFor(expanded),
         imgWrapStyle: `position:absolute;inset:0;overflow:hidden`,
