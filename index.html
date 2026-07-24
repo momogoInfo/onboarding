@@ -48,6 +48,10 @@
 <meta name="ext-resource-dependency" content="images/2.about us/2.channel/channel_amazon.png" data-resource-id="chAmazon" />
 <meta name="ext-resource-dependency" content="images/2.about us/2.channel/channel_markt.png" data-resource-id="chMarkt" />
 <meta name="ext-resource-dependency" content="images/2.about us/2.channel/channel_rewe shopinshop.png" data-resource-id="chRewe" />
+<meta name="ext-resource-dependency" content="images/2.about us/2.channel/channel_momogode_vertical.png" data-resource-id="chMomogodeV" />
+<meta name="ext-resource-dependency" content="images/2.about us/2.channel/channel_tiktok_vertical.png" data-resource-id="chTiktokV" />
+<meta name="ext-resource-dependency" content="images/2.about us/2.channel/channel_amazon_vertical.png" data-resource-id="chAmazonV" />
+<meta name="ext-resource-dependency" content="images/2.about us/2.channel/channel_reweshopinshop__vertical.png" data-resource-id="chReweV" />
 <script src="support.js"></script>
 </head>
 <body>
@@ -136,11 +140,11 @@ http://scripts.sil.org/OFL
     <div style="border-top: 1px solid rgba(30,30,28,0.08); border-bottom: 1px solid rgba(30,30,28,0.08); background-color: #000000">
       <div style="max-width: 1280px; margin: 0 auto; padding: 28px 40px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; position: relative; top: 0px; padding-top: 34px; padding-bottom: 34px">
         
-        <div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; flex-direction: row; width: 100%">
+        <div style="display: flex; gap: 40px; row-gap: 32px; flex-wrap: wrap; justify-content: center; flex-direction: row; width: 100%">
           <sc-for list="{{ channelBadges }}" as="c" hint-placeholder-count="4">
-            <div style="width:202px;height:105px;background:#FFFFFF;border:1px solid rgba(30,30,28,0.1);box-shadow:0 1px 2px rgba(30,30,28,0.04),0 6px 18px rgba(30,30,28,0.06);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center">
-              <div style="font-size:13px;font-weight:600;color:#6B6A64">{{ c.name }}</div>
-              <div style="font-size: 21px; font-weight: 800; color: #602DC7">{{ c.rank }}</div>
+            <div style="flex: 0 0 280px; text-align:center">
+              <div style="font-size:16px;font-weight:600;color:rgba(255,255,255,0.55)">{{ c.name }}</div>
+              <div style="font-size: 30px; font-weight: 800; color: #FFFFFF; margin-top:8px">{{ c.rank }}</div>
             </div>
           </sc-for>
         </div><div style="font-size: 13px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.02em; flex: none; width: 100%; text-align: center">{{ t.stripLine }}</div><div style="font-size:13px;font-weight:700;color:#6B6A64;letter-spacing:0.02em;flex:none"></div>
@@ -382,22 +386,43 @@ http://scripts.sil.org/OFL
       <div style="font-size:20px;font-weight:700;margin-bottom:20px">{{ t.strengthsHeading }}</div>
       <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:48px">
         <sc-for list="{{ strengths }}" as="st" hint-placeholder-count="3">
-          <div style="flex: 1 1 300px; background: #FFFFFF; border: 1px solid rgba(30,30,28,0.08);box-shadow:0 1px 2px rgba(30,30,28,0.04),0 6px 18px rgba(30,30,28,0.06); border-radius: 12px; padding: 26px; display: block; justify-content: flex-start">
-            <div style="font-size:15px;font-weight:700;margin-bottom:8px">{{ st.title }}</div>
+          <div style="flex: 1 1 300px; text-align: center; padding: 8px">
+            <div style="width:132px;height:132px;border-radius:50%;background:#1E1E1C;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+              <img src="{{ st.iconSrc }}" alt="" style="width:58px;height:58px">
+            </div>
+            <div style="font-size:18px;font-weight:700;margin-bottom:8px">{{ st.title }}</div>
             <div style="font-size:14px;line-height:1.7;color:#6B6A64">{{ st.desc }}</div>
           </div>
         </sc-for>
       </div>
 
+      <div style="font-size:20px;font-weight:700;margin-bottom:20px">{{ t.channelsHeading }}</div>
+      <div class="core-services-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-bottom:48px">
+        <sc-for list="{{ whyChannels }}" as="ch" hint-placeholder-count="4">
+          <div style="position:relative;overflow:hidden;aspect-ratio:3/4">
+            <div style="position:absolute;inset:0;overflow:hidden">
+              <img src="{{ ch.src }}" alt="{{ ch.eyebrow }}" style="width:100%;height:100%;object-fit:cover;display:block">
+            </div>
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(18,18,16,0.15) 0%, rgba(18,18,16,0.25) 55%, rgba(18,18,16,0.7) 100%)"></div>
+
+            <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;padding:20px 20px 22px;text-align:center">
+              <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;color:rgba(255,255,255,0.75);margin-bottom:6px;text-transform:uppercase">{{ ch.eyebrow }}</div>
+              <div style="font-size:18px;font-weight:800;color:#FFFFFF;line-height:1.3;margin-bottom:6px">{{ ch.name }}</div>
+              <p style="font-size:12px;line-height:1.5;color:rgba(255,255,255,0.85);margin:0;max-width:260px">{{ ch.desc }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
       <div style="display:flex;gap:48px;flex-wrap:wrap;margin-bottom:48px">
-        
+
         <div style="flex:1 1 300px">
           <div style="font-size:20px;font-weight:700;margin-bottom:16px">{{ t.productGroupsHeading }}</div>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
             <sc-for list="{{ productGroups }}" as="pg" hint-placeholder-count="5">
               <div style="flex: 1 1 150px; padding: 14px 16px; background: #FFFFFF; border: 1px solid rgba(30,30,28,0.1); box-shadow: 0 1px 2px rgba(30,30,28,0.04),0 6px 18px rgba(30,30,28,0.06); border-radius: 10px; width: 247px; height: 102px">
                 <div style="font-size: 17px; font-weight: 700; margin-bottom: 11px">{{ pg.name }}</div><div style="font-size: 16px; color: #6B6A64">{{ pg.desc }}</div>
-                
+
               </div>
             </sc-for>
           </div>
@@ -679,13 +704,16 @@ http://scripts.sil.org/OFL
       </div>
 
       <div style="font-size:20px;font-weight:700;margin-bottom:20px">{{ t.channelRankings }}</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:56px">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:32px;margin-bottom:56px">
         <sc-for list="{{ growthCharts }}" as="g" hint-placeholder-count="3">
-          <div style="background:#FFFFFF;border:1px solid rgba(30,30,28,0.08);box-shadow:0 1px 2px rgba(30,30,28,0.04),0 6px 18px rgba(30,30,28,0.06);border-radius:14px;padding:32px;display:flex;flex-direction:column;gap:16px">
-            
-            <div style="font-size: 17px; font-weight: 800; color: #1E1E1C; text-align: center">{{ g.name }}</div>
-            <div data-countup="" style="font-size: {{ g.valueFontSize }}; font-weight: 800; color: #602DC7; line-height: 1.1; font-variant-numeric: tabular-nums; margin-top: 4px; text-align: center; height: 57px; align-self: stretch; display: flex; align-items: center; justify-content: center">{{ g.value }}</div>
-            
+          <div style="flex:0 0 180px;text-align:center">
+            <div style="width:176px;height:176px;border-radius:50%;background:#1E1E1C;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 14px;padding:0 12px">
+              <sc-if value="{{ g.hasMain }}" hint-placeholder-val="{{ true }}">
+                <div data-countup="" style="font-size: 38px; font-weight: 800; color: #FFFFFF; line-height: 1.1; font-variant-numeric: tabular-nums">{{ g.valueMain }}</div>
+              </sc-if>
+              <div style="font-size: {{ g.subFontSize }}; font-weight: 700; color: #FFFFFF; margin-top: 4px">{{ g.valueSub }}</div>
+            </div>
+            <div style="font-size: 14px; font-weight: 600; color: #1E1E1C">{{ g.name }}</div>
           </div>
         </sc-for>
       </div>
@@ -1260,11 +1288,18 @@ class Component extends DCLogic {
       { name: 'momogo markt', desc: L('베를린 1호 오프라인 편의점', 'First offline store in Berlin'), src: (window.__resources && window.__resources.chMarkt) || 'images/2.about us/2.channel/channel_markt.png' },
       { name: 'REWE', desc: L('독일 메인스트림 마켓 ShopInShop 운영', 'Shop-in-shop operation in a German mainstream market'), src: (window.__resources && window.__resources.chRewe) || 'images/2.about us/2.channel/channel_rewe shopinshop.png' },
     ];
+    const whyChannels = [
+      { eyebrow: L('자사몰', 'Own Mall'), name: 'momogo mall', desc: L('자사몰 · 유럽 로컬 소비자 대상 직접 판매, #1 Top Seller', 'Own mall · direct sales to local European consumers, #1 Top Seller'), src: (window.__resources && window.__resources.chMomogodeV) || 'images/2.about us/2.channel/channel_momogode_vertical.png' },
+      { eyebrow: L('마켓플레이스', 'Marketplace'), name: 'Amazon DE F&B', desc: L('Top 1% 셀러', 'Top 1% seller'), src: (window.__resources && window.__resources.chAmazonV) || 'images/2.about us/2.channel/channel_amazon_vertical.png' },
+      { eyebrow: L('소셜 커머스', 'Social Commerce'), name: 'TikTok Shop', desc: L('F&B DE #6 Top Seller, official partner', 'F&B DE #6 Top Seller, official partner'), src: (window.__resources && window.__resources.chTiktokV) || 'images/2.about us/2.channel/channel_tiktok_vertical.png' },
+      { eyebrow: L('리테일 파트너십', 'Retail Partnership'), name: 'REWE Shop in Shop', desc: L('독일 메인스트림 마켓 ShopInShop 운영', 'Shop-in-shop operation in a German mainstream market'), src: (window.__resources && window.__resources.chReweV) || 'images/2.about us/2.channel/channel_reweshopinshop__vertical.png' },
+    ];
 
+    const svgToDataUri = (inner) => 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + inner + '</svg>');
     const strengths = [
-      { title: L('K-브랜드 유럽 진입 확장성', 'Scalable K-brand entry into Europe'), desc: L('K-브랜드 유럽 진입 가능성 검증', 'momogo removes European entry barriers such as customs and ingredient compliance on your behalf.') },
-      { title: L('올인원 오퍼레이션', 'All-in-one operation'), desc: L('수출신고부터 통관, 풀필먼트, CS, 온오프라인 플랫폼 입점까지, all in one 으로 마켓 태핑부터 스케일까지 가능합니다.', 'Customs, fulfilment and distribution automation — even AI flows — all in one.') },
-      { title: L('유럽 진출 파트너십', 'European entry partnerships'), desc: L('제품과 타겟에 맞는 채널 선택부터 마케팅 전략까지 함께 고민하고 실행하고 최적화합니다.', 'A local European network spanning both offline and online channels.') },
+      { title: L('K-브랜드 유럽 진입 확장성', 'Scalable K-brand entry into Europe'), desc: L('K-브랜드 유럽 진입 가능성 검증', 'momogo removes European entry barriers such as customs and ingredient compliance on your behalf.'), iconSrc: svgToDataUri('<path d="M12 2c3 2 4.5 5.5 4.5 9 0 2.5-1 4.8-2.5 6.5l-2 3-2-3C8.5 15.8 7.5 13.5 7.5 11c0-3.5 1.5-7 4.5-9z"/><circle cx="12" cy="10" r="1.5"/><path d="M9 16l-2 3 3-1M15 16l2 3-3-1"/>') },
+      { title: L('올인원 오퍼레이션', 'All-in-one operation'), desc: L('수출신고부터 통관, 풀필먼트, CS, 온오프라인 플랫폼 입점까지, all in one 으로 마켓 태핑부터 스케일까지 가능합니다.', 'Customs, fulfilment and distribution automation — even AI flows — all in one.'), iconSrc: svgToDataUri('<path d="M12 4l8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 16l8 4 8-4"/>') },
+      { title: L('유럽 진출 파트너십', 'European entry partnerships'), desc: L('제품과 타겟에 맞는 채널 선택부터 마케팅 전략까지 함께 고민하고 실행하고 최적화합니다.', 'A local European network spanning both offline and online channels.'), iconSrc: svgToDataUri('<circle cx="8.5" cy="9" r="3"/><path d="M2.5 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9.5" r="2.3"/><path d="M14.8 20c.2-2.8 1.8-4.7 3.7-5.4"/>') },
     ];
     const productGroups = [
       { name: L('가공식품 · 스낵', 'Processed food · snacks'), desc: L('K-푸드 밀키트, 간편식, 스낵류', 'K-food meal kits, ready meals, snacks') },
@@ -1481,15 +1516,15 @@ class Component extends DCLogic {
     const mallLine = mallPts.map(p => p.x + ',' + p.y).join(' ');
 
     const growthCharts = [
-      { name: 'TikTok Shop F&B 순위', value: '#6 Top Seller', type: 'bar', isBar: true, isLine: false, isBadge: false, note: 'momogo 6위',
+      { name: 'TikTok Shop F&B 순위', valueMain: '#6', hasMain: true, valueSub: 'Top Seller', subFontSize: '22px', type: 'bar', isBar: true, isLine: false, isBadge: false, note: 'momogo 6위',
         bars: mkBars([100, 90, 80, 70, 61, 54, 42], 5) },
-      { name: 'TikTok Shop TSP', value: 'Official Partner', type: 'badge', isBar: false, isLine: false, isBadge: true, note: '틱톡샵 공식 파트너', valueSmall: true,
+      { name: 'TikTok Shop TSP', valueMain: '', hasMain: false, valueSub: 'Official Partner', subFontSize: '30px', type: 'badge', isBar: false, isLine: false, isBadge: true, note: '틱톡샵 공식 파트너', valueSmall: true,
         badgeSub: 'TSP · Official Partner' },
-      { name: 'Amazon DE F&B', value: 'Top 1% Seller', type: 'bar', isBar: true, isLine: false, isBadge: false, note: '1위 셀러 기준',
+      { name: 'Amazon DE F&B', valueMain: 'Top 1%', hasMain: true, valueSub: 'Seller', subFontSize: '22px', type: 'bar', isBar: true, isLine: false, isBadge: false, note: '1위 셀러 기준',
         bars: mkBars([100, 84, 72, 62, 52, 44, 36], 0) },
-      { name: '독일 Asian E-grocery', value: '#1 Top Seller', type: 'line', isBar: false, isLine: true, isBadge: false, note: '월간 순 방문자',
+      { name: '독일 Asian E-grocery', valueMain: '#1', hasMain: true, valueSub: 'Top Seller', subFontSize: '22px', type: 'line', isBar: false, isLine: true, isBadge: false, note: '월간 순 방문자',
         linePoints: mallLine, dots: mallPts, labels: mallMonths.map(m => m.label), lineColor: chartColor },
-    ].map(g => ({ ...g, valueFontSize: '40px' }));
+    ];
     const interviews = [
       { title: '파트너사 인터뷰 · 진라면', subtitle: '유럽 진출 후기' },
       { title: '인플루언서 하이라이트 1', subtitle: 'TikTok · 조회수 입력 예정' },
@@ -1553,7 +1588,7 @@ class Component extends DCLogic {
       partnerScrollRef: this.partnerScrollRef,
       scrollPartnersLeft: () => scrollPartners(-1),
       scrollPartnersRight: () => scrollPartners(1),
-      historyGroups, awards, teamMembers, channelDetail, strengths, productGroups,
+      historyGroups, awards, teamMembers, channelDetail, whyChannels, strengths, productGroups,
       marketingOffline, marketingOnline, nextStages, growthCharts, interviews, serviceDetailCards, marketingDetailCards,
       marketingDetailOpen: this.state.marketingDetailOpen,
       marketingDetailToggleLabel: this.state.marketingDetailOpen ? t.collapseAll : t.expandAll,
