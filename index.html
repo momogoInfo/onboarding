@@ -1271,6 +1271,11 @@ const DS = {
   z: { base: 1, sticky: 100, modal: 200 },
 };
 
+// Contact form submissions are posted to this Google Apps Script Web App
+// URL (deployed from a Google Sheet), which appends a row to the sheet and
+// emails a notification. See docs/contact-form-setup.md for setup steps.
+const CONTACT_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxP5P6F95v5t7BiyAQ_-hmgLQBB9l1cMiTv1Pkk5fzUmxGa6JkI-acxM9nhT8Ife6HQKQ/exec';
+
 class Component extends DCLogic {
   state = {
     page: ['main', 'about', 'business', 'performance', 'contact'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'main',
@@ -1925,7 +1930,30 @@ class Component extends DCLogic {
       setFormCompany: (e) => this.setState({ formCompany: e.target.value }),
       setFormEmail: (e) => this.setState({ formEmail: e.target.value }),
       setFormMessage: (e) => this.setState({ formMessage: e.target.value }),
-      submitForm: () => this.setState({ submitted: true }),
+      submitForm: () => {
+        const { formName, formCompany, formEmail, formMessage, exportExperience, services, fileNames } = this.state;
+        if (!formName.trim() || !formEmail.trim()) return;
+
+        this.setState({ submitted: true });
+
+        if (CONTACT_FORM_ENDPOINT.startsWith('PASTE_')) return;
+
+        fetch(CONTACT_FORM_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            name: formName,
+            company: formCompany,
+            email: formEmail,
+            exportExperience: exportExperience || '',
+            services: Object.keys(services).filter(k => services[k]),
+            message: formMessage,
+            files: fileNames,
+            lang: this.state.lang,
+          }),
+        }).catch(() => {});
+      },
 
       exportExpYes: this.state.exportExperience === 'yes',
       exportExpNo: this.state.exportExperience === 'no',
