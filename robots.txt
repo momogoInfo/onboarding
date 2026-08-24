@@ -1,0 +1,7 @@
+# SITE URL: https://momogoinfo.github.io/onboarding/
+# When the custom domain is set, update this Sitemap line, sitemap.xml's <loc>,
+# and index.html's canonical + og:url meta tags to match.
+User-agent: *
+Allow: /
+
+Sitemap: https://momogoinfo.github.io/onboarding/sitemap.xml
