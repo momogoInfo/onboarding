@@ -1146,11 +1146,11 @@ http://scripts.sil.org/OFL
             <div style="background:#EAEAEA;border-radius:8px;padding:24px;color:#602DC7;font-size:14px;font-weight:600">{{ t.submitted }}</div>
           </sc-if>
           <sc-if value="{{ isNotSubmitted }}" hint-placeholder-val="{{ true }}">
-            <div>
+            <form onSubmit="{{ submitForm }}">
               <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px">
                 <div>
                   <label style="display:block;font-size:12px;color:#6B6A64;margin-bottom:6px">{{ t.fName }}</label>
-                  <input type="text" placeholder="{{ t.fNamePh }}" style="{{ formFieldStyle }}" value="{{ formName }}" onChange="{{ setFormName }}">
+                  <input type="text" required="{{ true }}" placeholder="{{ t.fNamePh }}" style="{{ formFieldStyle }}" value="{{ formName }}" onChange="{{ setFormName }}">
                 </div>
                 <div>
                   <label style="display:block;font-size:12px;color:#6B6A64;margin-bottom:6px">{{ t.fCompany }}</label>
@@ -1160,7 +1160,7 @@ http://scripts.sil.org/OFL
 
               <div style="margin-bottom:18px">
                 <label style="display:block;font-size:12px;color:#6B6A64;margin-bottom:6px">{{ t.fEmail }}</label>
-                <input type="email" placeholder="name@company.com" style="{{ formFieldStyle }}" value="{{ formEmail }}" onChange="{{ setFormEmail }}">
+                <input ref="{{ emailInputRef }}" type="email" required="{{ true }}" placeholder="name@company.com" style="{{ formFieldStyle }}" value="{{ formEmail }}" onChange="{{ setFormEmail }}">
               </div>
 
               <div style="border-top:1px solid #EAEAEA;margin:24px 0"></div>
@@ -1198,8 +1198,10 @@ http://scripts.sil.org/OFL
                 <input ref="{{ fileInputRef }}" type="file" multiple="{{ true }}" style="display:none" onChange="{{ setFile }}">
               </div>
 
-              <div style="padding:13px;background:#1E1E1C;color:#FFFFFF;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;text-align:center" style-hover="background:#33322F" onClick="{{ submitForm }}">{{ t.fSubmit }}</div>
-            </div>
+              <div style="font-size:11px;color:#9A988F;line-height:1.5;margin-bottom:10px">{{ t.fConsent }}</div>
+
+              <button type="submit" style="width:100%;border:none;padding:13px;background:#1E1E1C;color:#FFFFFF;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;text-align:center;font-family:inherit" style-hover="background:#33322F">{{ t.fSubmit }}</button>
+            </form>
           </sc-if>
         </div>
       </div>
@@ -1300,6 +1302,17 @@ class Component extends DCLogic {
   fileInputRef = React.createRef();
   bizServicesRef = React.createRef();
   bizNextStepsRef = React.createRef();
+
+  // Contact form's email <sc-if> section mounts/unmounts as the user navigates
+  // pages, so its listeners are wired via a callback ref (fires on every mount)
+  // rather than componentDidMount (fires once, may run before the section exists).
+  setEmailInputRef = (el) => {
+    if (!el) return;
+    el.addEventListener('invalid', () => {
+      el.setCustomValidity(this.state.lang === 'en' ? 'Please enter a valid email address.' : '올바른 이메일 주소를 입력해 주세요.');
+    });
+    el.addEventListener('input', () => el.setCustomValidity(''));
+  };
 
   goTo(page) { return () => { window.scrollTo(0, 0); this.setState({ page }); history.pushState(null, '', '#' + page); }; }
 
@@ -1410,6 +1423,7 @@ class Component extends DCLogic {
       fDocs: L('제품 관련 인증 현황 혹은 소개 문서', 'Product certifications or brand documents'),
       fDocsHint: L('예시: 브랜드 소개서(제품 정보, USP, 성분 검토, 판매 채널), 유럽 진출용 인증서(성분 검토자료)', 'e.g. brand deck (product info, USP, ingredient review, sales channels), EU-entry certifications (ingredient review docs)'),
       fSubmit: L('문의 보내기', 'Send inquiry'),
+      fConsent: L('제출 시 입력하신 담당자명·회사명·이메일 등의 정보는 문의 응대 목적으로만 수집·이용되며, 목적 달성 후 파기됩니다.', 'By submitting, the information you provide (contact name, company, email, etc.) will be collected and used solely to respond to your inquiry, and will be deleted once that purpose is fulfilled.'),
       footerTag: L('© 2026 momogo. EU Crossborder Enabler.', '© 2026 momogo. EU Crossborder Enabler.'),
       faqHeading: L('자주 묻는 질문', 'Frequently Asked Questions'),
     };
@@ -1930,9 +1944,9 @@ class Component extends DCLogic {
       setFormCompany: (e) => this.setState({ formCompany: e.target.value }),
       setFormEmail: (e) => this.setState({ formEmail: e.target.value }),
       setFormMessage: (e) => this.setState({ formMessage: e.target.value }),
-      submitForm: () => {
+      submitForm: (e) => {
+        e.preventDefault();
         const { formName, formCompany, formEmail, formMessage, exportExperience, services, fileNames } = this.state;
-        if (!formName.trim() || !formEmail.trim()) return;
 
         this.setState({ submitted: true });
 
@@ -1972,6 +1986,7 @@ class Component extends DCLogic {
       })),
 
       fileInputRef: this.fileInputRef,
+      emailInputRef: this.setEmailInputRef,
       clickFileInput: () => this.fileInputRef.current && this.fileInputRef.current.click(),
       setFile: (e) => this.setState({ fileNames: Array.from(e.target.files || []).map(f => f.name) }),
       fileLabel: this.state.fileNames.length ? this.state.fileNames.join(', ') : L('파일을 드래그하거나 클릭하여 첨부', 'Drag files here or click to attach'),
